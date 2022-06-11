@@ -1,0 +1,10 @@
+{
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json",
+  "version": 2,
+  "projects": {
+    "main-talk": "apps/main-talk",
+    "main-talk-e2e": "apps/main-talk-e2e",
+    "second-screen": "apps/second-screen",
+    "second-screen-e2e": "apps/second-screen-e2e"
+  }
+}

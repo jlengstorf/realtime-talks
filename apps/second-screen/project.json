@@ -1,0 +1,83 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/second-screen/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/second-screen",
+        "index": "apps/second-screen/src/index.html",
+        "baseHref": "/",
+        "main": "apps/second-screen/src/main.tsx",
+        "polyfills": "apps/second-screen/src/polyfills.ts",
+        "tsConfig": "apps/second-screen/tsconfig.app.json",
+        "assets": [
+          "apps/second-screen/src/favicon.ico",
+          "apps/second-screen/src/assets"
+        ],
+        "styles": ["apps/second-screen/src/styles.css"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/second-screen/src/environments/environment.ts",
+              "with": "apps/second-screen/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "second-screen:build",
+        "hmr": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "second-screen:build:development"
+        },
+        "production": {
+          "buildTarget": "second-screen:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/second-screen/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/second-screen"],
+      "options": {
+        "jestConfig": "apps/second-screen/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

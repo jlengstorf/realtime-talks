@@ -1,0 +1,83 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/main-talk/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/main-talk",
+        "index": "apps/main-talk/src/index.html",
+        "baseHref": "/",
+        "main": "apps/main-talk/src/main.tsx",
+        "polyfills": "apps/main-talk/src/polyfills.ts",
+        "tsConfig": "apps/main-talk/tsconfig.app.json",
+        "assets": [
+          "apps/main-talk/src/favicon.ico",
+          "apps/main-talk/src/assets"
+        ],
+        "styles": ["apps/main-talk/src/styles.css"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/main-talk/src/environments/environment.ts",
+              "with": "apps/main-talk/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "main-talk:build",
+        "hmr": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "main-talk:build:development"
+        },
+        "production": {
+          "buildTarget": "main-talk:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/main-talk/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/main-talk"],
+      "options": {
+        "jestConfig": "apps/main-talk/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

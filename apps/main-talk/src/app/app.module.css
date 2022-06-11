@@ -1,0 +1,38 @@
+/* Your styles goes here. */
+.slide {
+  align-items: center;
+  background-color: #f2f2f2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.big-text {
+  font-size: 5rem;
+}
+
+.sentiment-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sentiment {
+  accent-color: gray;
+  width: calc(50vw - 3rem);
+}
+
+.sentiment[value|='1'],
+.sentiment[value|='2'],
+.sentiment[value|='3'],
+.sentiment[value|='4'] {
+  accent-color: red;
+}
+
+.sentiment[value|='6'],
+.sentiment[value|='7'],
+.sentiment[value|='8'],
+.sentiment[value|='9'] {
+  accent-color: green;
+}
