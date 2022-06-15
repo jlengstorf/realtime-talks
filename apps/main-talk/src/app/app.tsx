@@ -11,11 +11,15 @@ const supabase = createClient('https://ngtysgnufzpmktudxyvx.supabase.co', 'eyJhb
 export function App() {
   useEffect(() => {
     const mySubscription = supabase
-      .from('*')
+      .from('sentiment')
       .on('INSERT', payload => {
         console.log('Change received!', payload)
       })
       .subscribe()
+
+      return () => {
+        supabase.removeSubscription(mySubscription)
+      }
   }, []);
 
   return (
