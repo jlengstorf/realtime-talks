@@ -44,9 +44,9 @@ export function App() {
 
     const { data, error } = await supabase
       .from('sentiment')
-      .insert([
+      .insert(
         { value: 'good', user_id: user.id }
-      ]);
+      );
 
     console.log({ data, error })
   }
