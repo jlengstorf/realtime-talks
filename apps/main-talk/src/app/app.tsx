@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
 import { createClient } from '@supabase/supabase-js'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import styles from './app.module.css';
 
@@ -9,11 +9,23 @@ import styles from './app.module.css';
 const supabase = createClient('https://ngtysgnufzpmktudxyvx.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ndHlzZ251ZnpwbWt0dWR4eXZ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTQ3OTU3MTcsImV4cCI6MTk3MDM3MTcxN30.VxNKyl8_Xm2ogaXyJlrGr-6wAhyXnu45obVovZlVotQ')
 
 export function App() {
+  const [currentSentiment, setCurrentSentiment] = useState(50);
+
   useEffect(() => {
     const mySubscription = supabase
       .from('sentiment')
       .on('INSERT', payload => {
         console.log('Change received!', payload)
+        const {value} = payload.new;
+        setCurrentSentiment((currentVal) => {
+
+          const incValue = value === 'bad' ? -1 : 1;
+          const newValue = Math.min(100, Math.max(0, currentVal + incValue));
+
+          console.log({ value, incValue, newValue, currentVal })
+
+          return newValue;
+        });
       })
       .subscribe()
 
@@ -41,9 +53,10 @@ export function App() {
           <input
             type="range"
             id="sentiment"
-            min="10"
-            max="99"
-            defaultValue="50"
+            min="0"
+            max="100"
+            value={currentSentiment}
+            readOnly
             className={styles['sentiment']}
           />
 
