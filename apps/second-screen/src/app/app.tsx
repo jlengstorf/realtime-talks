@@ -13,24 +13,27 @@ export function App() {
   const [ user, setUser ] = useState<any>();
 
   async function signInWithGithub() {
-    const { user, session, error } = await supabase.auth.signIn({
+    const { error } = await supabase.auth.signIn({
       provider: 'github',
     })
 
-    if (!user || !session) {
-      return;
+    if(error) {
+      console.log(error.message)
     }
   }
 
   useEffect(() => {
     async function loadUser() {
       const user = supabase.auth.user();
-
       setUser(user);
     }
 
+    supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null)
+    })
+
     loadUser();
-  })
+  }, [])
 
   if (!user) {
     return <button onClick={signInWithGithub}>Sign In</button>
@@ -41,9 +44,9 @@ export function App() {
 
     const { data, error } = await supabase
       .from('sentiment')
-      .insert([
+      .insert(
         { value: 'good', user_id: user.id }
-      ]);
+      );
 
     console.log({ data, error })
   }
