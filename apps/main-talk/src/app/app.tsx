@@ -22,8 +22,6 @@ export function App() {
           const incValue = value === 'bad' ? -1 : 1;
           const newValue = Math.min(100, Math.max(0, currentVal + incValue));
 
-          console.log({ value, incValue, newValue, currentVal })
-
           return newValue;
         });
       })
