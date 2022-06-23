@@ -38,23 +38,30 @@ export function App() {
     return <button onClick={signInWithGithub}>Sign In</button>
   }
 
-  async function createVote(event: any) {
+  async function createGoodVote(event: any) {
     event.preventDefault();
 
-    const { data, error } = await supabase
-      .from('sentiment')
-      .insert(
-        { value: 'good', user_id: user.id }
-      );
+    await createVote('good');
+  }
 
-    console.log({ data, error })
+
+  async function createBadVote(event: any) {
+    event.preventDefault();
+
+    await createVote('bad');
+  }
+
+  async function createVote(value: string) {
+    await supabase
+      .from('sentiment')
+      .insert({ value, user_id: user.id });
   }
 
   return (
-    <form onSubmit={createVote}>
+    <form>
       <h1>How do you feel about this nonsense?</h1>
-      <button id="good"><span role="img" aria-label="Yum face">😋</span></button>
-      <button id="bad"><span role="img" aria-label="Angry face">😡</span></button>
+      <button onClick={createGoodVote}><span role="img" aria-label="Yum face">😋</span></button>
+      <button onClick={createBadVote}><span role="img" aria-label="Angry face">😡</span></button>
     </form>
   );
 }
