@@ -1,6 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useEffect, useState } from 'react';
-import { } from '@supabase/supabase-js';
 import styles from './app.module.css';
 
 import { createClient } from '@supabase/supabase-js'
